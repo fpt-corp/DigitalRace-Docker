@@ -1,0 +1,6 @@
+<launch>
+        <include file="$(find astra_camera)/launch/astra.launch"/>
+        <node name="dira_hal" pkg="hal" type="hal_node" output="screen" />
+        <node name="dira_car_controller" pkg="car_controller" type="car_controller_node" output="screen" />
+</launch>
+

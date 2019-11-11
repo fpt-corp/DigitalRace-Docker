@@ -1,0 +1,4 @@
+<launch>
+        <node name="dira" pkg="dira" type="dira_node.py" output="screen" />
+</launch>
+

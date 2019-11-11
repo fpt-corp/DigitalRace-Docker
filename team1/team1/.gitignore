@@ -1,0 +1,10 @@
+# Compiled files
+*.pyc
+*.o
+*.so
+
+# Backup files
+*.bak
+
+# VSCode
+.vscode/
