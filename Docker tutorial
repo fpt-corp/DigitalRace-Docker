@@ -1,0 +1,97 @@
+This document is written assuming the reader understand and is able to operate the Linux Terminal. 
+
+
+1.Install docker : https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+2. Create a directory using mkdir:
+```
+mkdir Docker_files
+cd Docker_files
+```
+3. Clone the Dira Docker repo, or download zip from this link: https://drive.google.com/open?id=1HSCeMjPZOnYxlv5o_SpKOCsydyLNy_EI  
+and then uncompress. After uncompressing, go to the directory:
+```
+cd cds_docker
+```
+
+4. Build, using this command:
+```
+sudo docker build --tag=ros_dira .
+```
+command breakdown:
++sudo docker : to call the docker program from terminal with super user privilage
++build: docker's build command to start building the docker image
++--tag=ros_dira : assign the name "ros_dira" to the image to be created
++. : indicate that every thing inside the docker file with be built
+
+note: this process can take a very long time.
+
+5. First run
+```
+sudo docker run --net=host -it --name dira ros_dira bash
+```
+
+command breakdown:
++ run: docker's run command to run the image named later
++ --net=host: to set the container's network on the same network as the host machine. This enable network communication between the host and the docker image at the cost of some degree of isolation.
++ --it --name dira: setting the name of the container to "dira". Because this command also set the name for the container, you will only be able to use it once, as there cannot be two containers of the same name. To open a terminal to this container again, use another command specified below.
++ ros_dira: the name of the image to put in the container
++ bash: open a bash terminal
+
+after this command, you will be given access to the docker image, where you can interact with it using the terminal. You should consider this a virtual machine that can ultilize the host's hardware without having to simulate anything. There are certain support scripts available inside the /scripts directory inside the docker container you can checkout by going to /scripts:
+```
+cd /scripts
+ls
+``` 
+The above command will list the scripts in this directory. The first one you should run is create_catkin_workspace.sh
+```
+./create_catkin_workspace.sh
+./cuda.bash
+```
+
+the catkin_ws directory will then be created inside the /root directory, and Cuda Toolkit 10.1 will be installed. It is also advised that you create a /Download in /root as well, to save files that you downloaded via wget or files transfer from your host machine
+```
+cd /root
+mkdir /Downloads
+
+```
+
+The setup for the environment within your docker container is completed. If you wish to open another terminal to your container, simply run this command on your host's terminal:
+```
+sudo docker exec -it dira /bin/bash
+```
+The above command is also used to access you container since the second run. For it to run properly, you need to make sure the dira container is up and running. You can check it's status using this command:
+```
+sudo docker container ls -a
+```
+This will list the existing containers on your host machine. Of course, you should run this on your host's terminal. 
+
+6. Copy files to your docker:
+Copying files from your host machine to the docker container is fairly simple:
+```
+sudo docker cp <source> <container-name>:<destination>
+```
+command breakdown:
++ cp: docker's copy command
++ <source>: the source of the file on your host machine, for example /home/fti/Downloads/cds_docker/scripts/cuda.bash. This same syntax can be applied to directories as well
++ <container-name>:<destination>:
+
+note: this command should be run from the host's terminal
+
+7. Install cudnn:
+Cuda and cudnn is essential to run the DiRa opensource code. You will need to download two deb files from the official cuddn website. This requires authentication, so if you don't want to create and Nvidia developer account, here are the google drive links
+file 1: https://drive.google.com/open?id=1ciVXlGyYgQZ5GWMl5niB4fMhLgBT2b3n
+file 2: https://drive.google.com/open?id=1yh8VzPsWNYpNOSQKtzaZnH5VNhNSoCtA
+
+Once you've downloaded these onto your host machine, use the docker cp command from part 6 to copy these files to the /root/Download directory inside your docker container
+```
+sudo docker cp <path-to-deb-file-1> dira:/root/Downloads
+sudo docker cp <path-to-deb-file-2> dira:/root/Downloads
+```
+open a terminal to your docker container, and navigate to /root/Downloads. 
+Install cudnn using:
+```
+sudo dpkg -i <deb-file-1>
+sudo dpkg -i <deb-file-2>
+```
+8. Test your packages. 
+You can copy your own package to dira:/root/catkin_ws/src and test your package for yourself. Be sure to install any necessary dependencies as the Dockerfile only cover basic dependencies and DiRa's dependencies. You can copy the DiRa sourcecode ros_dira provided inside the downloaded cds_docker folder to your container's catkin_ws and try for yourself. 
