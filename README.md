@@ -9,7 +9,7 @@ Cấu trúc thư mục:
 ```
 team1___
         |___
-	    |---<thư mục code (catkin/src) của thí sinh.
+	|---<thư mục code (catkin/src) của thí sinh.
         |---Dockerfile
 ```
 Trong cấu trúc thư mục này, thí sinh cần đặt source code vào trong folder /<Tên-đội>. Source code đặt vào trong folder này là một package ROS đầy đủ. Khi luyện tập ở nhà các đội tự đổi tên các folder trùng với tên đội mình.
