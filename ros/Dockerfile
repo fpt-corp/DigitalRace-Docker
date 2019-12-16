@@ -70,6 +70,8 @@ COPY ./entrypoint.sh /
 
 WORKDIR /
 
-ENTRYPOINT ["chmod", "+x", "/entrypoint.sh"]
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/bin/bash"]
