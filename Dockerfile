@@ -12,29 +12,28 @@ RUN apt-get update && apt-get install -q -y \
     gnupg2 \
     && rm -rf /var/lib/apt/lists/*
 
-# Setup your sources.list
-RUN 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+# setup keys
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-# Set up your keys
-RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+# setup sources.list
+RUN echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros1-latest.list
 
+# install bootstrap tools
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python-rosdep \
     python-rosinstall \
     python-vcstools \
     && rm -rf /var/lib/apt/lists/*
 
-RUN apt install ros-melodic-ros-base
-
+# setup environment
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
+# bootstrap rosdep
 RUN rosdep init \
     && rosdep update \
     && echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc \
-    && source ~/.bashrc
-
-RUN apt install python-rosinstall python-rosinstall-generator python-wstool build-essential
+	&& source ~/.bashrc
 
 RUN source /opt/ros/melodic/setup.bash
 
