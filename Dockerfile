@@ -35,7 +35,7 @@ RUN rosdep init \
     && echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc \
 	&& /bin/bash -c "source ~/.bashrc"
 
-RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
+#RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
 
 RUN mkdir -p /catkin_ws/src \
     && cd /catkin_ws/ \
