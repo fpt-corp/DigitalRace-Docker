@@ -46,7 +46,6 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
 RUN mkdir -p catkin_ws/src
 
 WORKDIR /catkin_ws/src
-#RUN /opt/ros/indigo/bin/catkin_init_workspace
 RUN /bin/bash -c '. /opt/ros/melodic/setup.bash; catkin_init_workspace /catkin_ws/src'
 
 WORKDIR /catkin_ws
