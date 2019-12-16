@@ -33,9 +33,9 @@ ENV LC_ALL C.UTF-8
 RUN rosdep init \
     && rosdep update \
     && echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc \
-	&& source ~/.bashrc
+	&& /bin/bash -c "source ~/.bashrc"
 
-RUN source /opt/ros/melodic/setup.bash
+RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
 
 RUN mkdir -p /catkin_ws/src \
     && cd /catkin_ws/ \
