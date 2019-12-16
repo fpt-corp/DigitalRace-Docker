@@ -59,7 +59,7 @@ RUN apt-get update \
     ros-melodic-image-common \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./video_stream /catkin_ws/src
+COPY ./video_stream /catkin_ws/src/video_stream
 
 WORKDIR /catkin_ws
 RUN /bin/bash -c '. /opt/ros/melodic/setup.bash; cd /catkin_ws; catkin_make'
