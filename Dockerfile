@@ -33,24 +33,44 @@ ENV LC_ALL C.UTF-8
 RUN rosdep init \
     && rosdep update \
     && echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc \
-	&& /bin/bash -c "source ~/.bashrc"
+    && /bin/bash -c "source ~/.bashrc"
 
-#RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
+# install ros packages
+ENV ROS_DISTRO melodic
+RUN apt-get update && apt-get install -y \
+    ros-melodic-ros-base \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /catkin_ws/src \
-    && cd /catkin_ws/ \
-    && catkin_make
+RUN /bin/bash -c "source /opt/ros/melodic/setup.bash"
 
-RUN apt-get install ros-lunar-rosbridge-server
+RUN mkdir -p catkin_ws/src
+
+WORKDIR /catkin_ws/src
+#RUN /opt/ros/indigo/bin/catkin_init_workspace
+RUN /bin/bash -c '. /opt/ros/melodic/setup.bash; catkin_init_workspace /catkin_ws/src'
+
+WORKDIR /catkin_ws
+RUN /bin/bash -c '. /opt/ros/melodic/setup.bash; cd /catkin_ws; catkin_make'
+RUN echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
+
+RUN apt-get update \
+    && apt-get install -y ros-melodic-rosbridge-server \
+    ros-melodic-cv-bridge \
+    ros-melodic-vision-opencv \
+    ros-melodic-image-common \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY ./video_stream /catkin_ws/src
 
-RUN cd /catkin_ws \
-    && catkin_make
+WORKDIR /catkin_ws
+RUN /bin/bash -c '. /opt/ros/melodic/setup.bash; cd /catkin_ws; catkin_make'
+RUN echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 # setup entrypoint
-COPY ./ros_entrypoint.sh /
+COPY ./entrypoint.sh /
 
-ENTRYPOINT ["/entrypoint.sh"]
+WORKDIR /
 
-CMD ["bash"]
+ENTRYPOINT ["chmod", "+x", "/entrypoint.sh"]
+
+CMD ["/bin/bash"]
