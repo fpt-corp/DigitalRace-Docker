@@ -5,7 +5,7 @@ Các image được xây dựng chỉ chứa những môi trường cơ bản,
 các đội tham gia cần cài đặt thêm một số thư viện cho phù hợp với 
 phần thi của đội mình
 
-## I. Các `tag` được hỗ trợ và `Dockerfile` tương ứng.
+## I. Các [tag](https://hub.docker.com/r/dungpb/dira_ros/tags) được hỗ trợ và `Dockerfile` tương ứng.
 
 - [ros](https://github.com/badungphan99/dira_docker_ros/blob/master/ros/Dockerfile)
 - [ros-cuda](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-cuda/Dockerfile)
@@ -19,13 +19,13 @@ Cấu trúc thư mục được mô tả như hình sau:
 <team-name>
 ├── Dockerfile
 ├── README.md
-├── src
+\── src
 ```
 
 ### II.1 Dockerfile
 
 Là file để có thể build lên thành 1 image docker.
-Trong `Dockerfile` của các đội tham gia buộc phải `FROM` từ docker hub của BTC, 
+Trong `Dockerfile` của các đội tham gia buộc phải `FROM` từ [docker hub](https://hub.docker.com/r/dungpb/dira_ros) của BTC, 
 trường hợp nếu đội thi cần thêm những image khác thì có thể viết một Dockerfile mới 
 và gửi để mình có thể đẩy lên docker hub cho các  bạn.
 
@@ -43,22 +43,26 @@ Thư mục chứa toàn bộ source code của các đội.
 
 ### Bước 1: Build image
 
-`docker build -t <image-name> .`
+```$ docker build -t <image-name> .```
 
 ### Bước 2: Chạy 1 image thành container
 - chạy docker image không sử dụng gpu:
 
-`docker run --rm -it --network=host -v <đường dẫn đến thư mục src ở trên>:/catkin_ws/src --name <team-name> <image-name> bash`
+```$ docker run --rm -it --network=host -v <đường dẫn đến thư mục src ở trên>:/catkin_ws/src --name <team-name> <image-name> bash```
 
 - chạy docker image sử dụng gpu:
 
-`docker run --rm -it --gpus=all --network=host -v <đường dẫn đến thư mục src ở trên>:/catkin_ws/src --name <team-name> <image-name> bash`
+```$ docker run --rm -it --gpus=all --network=host -v <đường dẫn đến thư mục src ở trên>:/catkin_ws/src --name <team-name> <image-name> bash```
 
 Lúc này bạn đã được đưa vào container luôn và có thể sử dụng terminal bình thường.
 
 - Cách để truy cập 1 container đang chạy
 
-`docker exec -it <contaier-name> bash`
+```$ docker exec -it <contaier-name> bash```
 
 ## III. Lưu ý:
 
+- Hai tag `ros` và `ros-cuda` là các image cơ bản, các đội phải `FROM` từ image này
+- Cần file README hướng dẫn chỉ nhằm mục đính thông báo cho BTC code chạy ntn thì sẽ sẵn sàng, các đội cần viết launch file 
+để btc có thể chạy theo cú pháp `$ roslaunch team-name team-name.launch`
+- option `-v` trong lệnh chạy container là để mount file vào, các đội có thể sử dụng `COPY` từ trong `Dockerfile` cũng được chấp nhận.
