@@ -46,7 +46,10 @@ Chạy một trong hai lệnh trên sẽ tạo container và cho thí sinh truy 
 
 ## IV. Cách nộp bài
 Thí sinh nộp thư mục có cấu trúc như đã nói ở trên. Ban tổ chức sẽ build lại trên máy của btc container đó.
+BTC sẽ catkin_make trong container là chạy file launch:
+VD đội 123 - roslaunch team123 team123.launch
+
 ___
 ### *Lưu ý trước khi thi
 Sau khi đã thiết lập xong Dockerfile để có một container chạy mã nguồn không bị lỗi, đội thi cần gửi mã nguồn và Dockerfile cho ban tổ chức để đảm bảo có thể chạy được trong ngày thi, chậm nhất là 1 tuần trước ngày thi. Nếu sau thời hạn này, đội thi phát sinh nhu cầu cài đặt thêm thư viện, đội thi phải tự chịu những rủi ro có thể có. Ban tổ chức vẫn liên tục tiếp nhận yêu cầu kiểm tra Dockerfile và tạo image Docker cho các thư viện bị xung đột sau hạn chót 1 tuần, tuy nhiên không đảm bảo việc mã nguồn có thể chạy tốt. Những lệnh chạy trong hướng dẫn này chỉ nhằm chạy được docker container dùng 1 lần, nếu thí sinh muốn lưu container lại thì cần xem kĩ hướng dẫn sử dụng docker ở đầu. 
-
+Thí sinh build image riêng dựa trên hai tag base của BTC (ros hoặc ros-cuda) cần làm thêm một bước là push DockerFile đó lên DockerHub cá nhân và gửi cho BTC kiểm tra 1 tuần trước khi thi.
