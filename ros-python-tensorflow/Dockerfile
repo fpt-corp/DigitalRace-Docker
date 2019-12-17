@@ -1,4 +1,4 @@
-FROM dungpb/dira_ros:ros
+FROM dungpb/dira_ros:ros-cuda
 
 RUN apt-get update \
     && apt-get install -y python3 \
