@@ -6,8 +6,6 @@ RUN apt-get update \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./requirements.txt /
-
 RUN pip3 install tensorflow-gpu
 
 # setup entrypoint
