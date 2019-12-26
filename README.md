@@ -9,8 +9,9 @@ phần thi của đội mình
 
 - [ros](https://github.com/badungphan99/dira_docker_ros/blob/master/ros/Dockerfile) (image này chỉ chứa ros-melodic)
 - [ros-cuda](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-cuda/Dockerfile) (image này có ros-melodic và cuda 10.0, cudnn 7)
-- [ros-python](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python/Dockerfile) (image này có ros và python, ros kế thừa từ tag `ros`)
-- [ros-python-tensorflow](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python-tensorflow/Dockerfile) (image này có ros, python, tensorflow cho python image này kế thừa từ tag `ros-cuda`)
+- [ros-python](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python/Dockerfile) (image này có ros và python3, ros kế thừa từ tag `ros`)
+- [ros-python-tensorflow](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python-tensorflow/Dockerfile) (image này có ros, python3, tensorflow cho python image này kế thừa từ tag `ros-cuda`)
+- [ros-python2-tensorflow](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python2-tensorflow/Dockerfile) (image này có ros, python2, tensorflow cho python image này kế thừa từ tag `ros-cuda`)
 
 ## II. Cấu trúc thư mục
 
