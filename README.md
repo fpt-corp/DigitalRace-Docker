@@ -7,10 +7,10 @@ phần thi của đội mình
 
 ## I. Các [tag](https://hub.docker.com/r/dungpb/dira_ros/tags) được hỗ trợ và `Dockerfile` tương ứng.
 
-- [ros](https://github.com/badungphan99/dira_docker_ros/blob/master/ros/Dockerfile)
-- [ros-cuda](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-cuda/Dockerfile)
-- [ros-python](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python/Dockerfile)
-- [ros-python-tensorflow](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python-tensorflow/Dockerfile)
+- [ros](https://github.com/badungphan99/dira_docker_ros/blob/master/ros/Dockerfile) (image này chỉ chứa ros-melodic)
+- [ros-cuda](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-cuda/Dockerfile) (image này có ros-melodic và cuda 10.0, cudnn 7)
+- [ros-python](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python/Dockerfile) (image này có ros và python, ros kế thừa từ tag `ros`)
+- [ros-python-tensorflow](https://github.com/badungphan99/dira_docker_ros/blob/master/ros-python-tensorflow/Dockerfile) (image này có ros, python, tensorflow cho python image này kế thừa từ tag `ros-cuda`)
 
 ## II. Cấu trúc thư mục
 
@@ -62,7 +62,10 @@ Lúc này bạn đã được đưa vào container luôn và có thể sử dụ
 
 ## III. Lưu ý:
 
-- Hai tag `ros` và `ros-cuda` là các image cơ bản, các đội phải `FROM` từ image này
+- Hai tag `ros` và `ros-cuda` là các image cơ bản, chỉ có các thư viện cơ bản như ros và cuda
+```diff
+- Các đội bắt buộc phải `FROM` từ image của BTC rồi tự xây dựng thành image của đội mình
+```
 - Cần file README hướng dẫn chỉ nhằm mục đính thông báo cho BTC code chạy ntn thì sẽ sẵn sàng, các đội cần viết launch file 
 để btc có thể chạy theo cú pháp `$ roslaunch team-name team-name.launch`
 - option `-v` trong lệnh chạy container là để mount file vào, các đội có thể sử dụng `COPY` từ trong `Dockerfile` cũng được chấp nhận.
