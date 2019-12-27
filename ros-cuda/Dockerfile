@@ -32,18 +32,24 @@ RUN apt-get update \
         ros-$ROS_DISTRO-image-common \
     && rm -rf /var/lib/apt/lists/*
 
+COPY ./entrypoint.sh /
+RUN chmod +x entrypoint.sh
+
 # bootstrap rosdep
 RUN rosdep init && rosdep update
 
-COPY ./video_stream /catkin_ws/src/video_stream
-COPY ./entrypoint.sh /
-
-# Setup video stream
 WORKDIR /catkin_ws
+
 RUN mkdir -p src \
     && /bin/sh -c '. /opt/ros/$ROS_DISTRO/setup.bash; catkin_init_workspace /catkin_ws/src' \
     && /bin/sh -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /catkin_ws; catkin_make' \
-    && chmod +x entrypoint.sh
+    && echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
+
+COPY ./video_stream /catkin_ws/src/video_stream
+
+# Setup video stream
+RUN /bin/sh -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /catkin_ws; catkin_make' \
+    && echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 ENTRYPOINT ["/entrypoint.sh"]
 
