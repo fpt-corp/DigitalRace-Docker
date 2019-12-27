@@ -41,15 +41,13 @@ RUN rosdep init && rosdep update
 WORKDIR /catkin_ws
 
 RUN mkdir -p src \
-    && /bin/sh -c '. /opt/ros/$ROS_DISTRO/setup.bash; catkin_init_workspace /catkin_ws/src' \
-    && /bin/sh -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /catkin_ws; catkin_make' \
+    && /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; catkin_init_workspace /catkin_ws/src' \
+    && /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /catkin_ws; catkin_make' \
     && echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
-
-COPY ./video_stream /catkin_ws/src/video_stream
 
 # Setup video stream
-RUN /bin/sh -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /catkin_ws; catkin_make' \
-    && echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
+COPY ./video_stream /catkin_ws/src/video_stream
+RUN /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd /catkin_ws; catkin_make'
 
 ENTRYPOINT ["/entrypoint.sh"]
 
