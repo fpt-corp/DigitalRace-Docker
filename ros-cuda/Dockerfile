@@ -36,7 +36,8 @@ COPY ./entrypoint.sh /
 RUN chmod +x entrypoint.sh
 
 # bootstrap rosdep
-RUN rosdep init && rosdep update
+RUN rosdep init && rosdep update \
+    && echo 'source /opt/ros/$ROS_DISTRO/setup.bash' >> ~/.bashrc 
 
 WORKDIR /catkin_ws
 
